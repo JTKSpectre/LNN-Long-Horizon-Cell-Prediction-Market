@@ -1,3 +1,39 @@
+'''
+Branch - Independent Project: Horizon Cell Tests
+Author: Matthew J. Werner
+GitHub Username: JTKSpectre
+Original Author: HusseinJammal
+Original Repo:  https://github.com/HusseinJammal/Liquid-Neural-Networks-in-Stock-Market-Prediction
+
+Project Purpose:
+Testing of a hypothesized Long Horizon cell concept for extended predictions based on synthetic data.
+A three h_t ODE loop structured on a fast, medium, and slow cadence to observe changes within
+a stock market. The prediction model uses synthetic simulated data based on stock market trends,
+data models, and a predictive cycle that accounts for known trends within the market.
+
+Horizon Cell Design and Implementations:
+
+The Horizon Cell holds three independent continuous-time hidden states — fast,
+medium, and slow — each governed by its own Liquid Time-Constant ODE with a
+distinct time constant (tau ~ 1, 10, 100). Each state advances on its own
+cadence: the fast state updates every step, the medium every ~5, the slow
+every ~20 (slow-tick); off-tick states hold their value forward.
+
+Integration uses a fused semi-implicit Euler step, which is numerically stable
+per state — so any divergence observed is architectural, not a solver artifact.
+Output is a linear readout over the concatenated states, fit by ridge
+regression with the recurrent weights held fixed (reservoir-style). The three
+states evolve independently given shared input; this version applies no
+inter-state coupling.
+
+Finding: the cell tracks well in low-variance regimes. Under high-variance
+synthetic input, the fast state's norm grows without bound and the output
+diverges. The slow state partially damps the readout but does not constrain
+the fast state. A containment mechanism for the fast state is left here as an
+open problem.
+
+'''
+
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS, cross_origin
 from pandas_datareader import data as pdr
