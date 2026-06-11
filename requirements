@@ -1,0 +1,11 @@
+# LNN-Long-Horizon-Cell-Prediction-Market
+# Core — the cell and harness run on these two alone
+numpy>=1.24
+matplotlib>=3.7
+
+# Optional — CSV trace export (uncomment if used)
+# pandas>=2.0
+
+# Optional — conformal prediction intervals via MAPIE
+# (or hand-roll split-conformal in ~20 lines and skip this)
+# mapie>=0.8
