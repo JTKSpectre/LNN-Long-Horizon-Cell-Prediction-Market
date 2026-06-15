@@ -37,6 +37,9 @@ open problem.
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS, cross_origin
 from pandas_datareader import data as pdr
+
+from PyTorch import PyTorch
+
 import yfinance as yf
 import pandas_ta as ta
 import pandas as pd
@@ -58,6 +61,10 @@ class ODESolver(Enum):
     SemiImplicit = 0
     Explicit = 1
     RungeKutta = 2
+
+class HorizonCell(PyTorch.LTC):
+    def __init__(self):
+        self = self
 
 class LTCCell(tf.keras.layers.AbstractRNNCell):
     def __init__(self, num_units, input_mapping=MappingType.Affine, solver=ODESolver.SemiImplicit, ode_solver_unfolds=6, activation=tf.nn.tanh, **kwargs):
